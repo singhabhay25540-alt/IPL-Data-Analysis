@@ -11,7 +11,7 @@ st.write("Analysis of IPL matches (2008–2026)")
 df = pd.read_csv("ipl_comprehensive_dataset.csv")
 
 st.subheader("Dataset Preview")
-st.dataframe(df.head())
+st.dataframe(df, use_container_width=True)
 
 st.subheader("Top 10 Teams by Wins")
 
