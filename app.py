@@ -122,6 +122,8 @@ season.plot(
     color=bg,
     ax=ax2
 )
+ax2.set_xticks(range(len(season.index)))
+ax2.set_xticklabels(season.index, rotation=45)
 
 plt.grid(True)
 
