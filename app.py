@@ -89,7 +89,7 @@ st.subheader("Dataset Preview")
 st.dataframe(filtered_df, use_container_width=True)
 
 # ---------------- TEAM WINS GRAPH ---------------- #
-st.subheader(f"{selected_team} Performance Overview"
+st.subheader(f"{selected_team} Performance Overview")
 
 team_wins = filtered_df["winner"].value_counts().head(10)
 
