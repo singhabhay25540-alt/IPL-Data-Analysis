@@ -13,17 +13,17 @@ df = pd.read_csv("ipl_comprehensive_dataset.csv")
 # ---------------- TEAM COLORS ---------------- #
 team_colors = {
     "Mumbai Indians":"#004BA0",
-    "Chennai Super Kings":"#F9CD05",
-    "Royal Challengers Bengaluru":"#D71920",
-    "Royal Challengers Bangalore":"#D71920",
-    "Kolkata Knight Riders":"#3A225D",
-    "Delhi Capitals":"#17479E",
-    "Punjab Kings":"#D71920",
-    "Kings XI Punjab":"#D71920",
-    "Rajasthan Royals":"#EA1A85",
-    "Sunrisers Hyderabad":"#FF822A",
-    "Lucknow Super Giants":"#00AEEF",
-    "Gujarat Titans":"#1C2C5B"
+    "Chennai Super Kings":"#E6B800",
+    "Royal Challengers Bengaluru":"#8B0000",
+    "Royal Challengers Bangalore":"#8B0000",
+    "Kolkata Knight Riders":"#3B0A57",
+    "Delhi Capitals":"#003F87",
+    "Punjab Kings":"#B71C1C",
+    "Kings XI Punjab":"#B71C1C",
+    "Rajasthan Royals":"#7D3C98",
+    "Sunrisers Hyderabad":"#D35400",
+    "Lucknow Super Giants":"#0B5394",
+    "Gujarat Titans":"#0F4C81"
 }
 
 # ---------------- SIDEBAR ---------------- #
@@ -89,7 +89,7 @@ st.subheader("Dataset Preview")
 st.dataframe(filtered_df, use_container_width=True)
 
 # ---------------- TEAM WINS GRAPH ---------------- #
-st.subheader("Top Teams by Wins")
+st.subheader(f"{selected_team} Performance Overview"
 
 team_wins = filtered_df["winner"].value_counts().head(10)
 
