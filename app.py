@@ -123,7 +123,8 @@ season.plot(
     ax=ax2
 )
 
-plt.xticks(season.index[::2])
+ax2.set_xticks(range(len(season)))
+ax2.set_xticklabels(season.index[::2])
 plt.grid(True)
 
 plt.xlabel("Season")
