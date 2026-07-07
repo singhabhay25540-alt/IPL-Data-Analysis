@@ -70,7 +70,8 @@ else:
 col1, col2, col3 = st.columns(3)
 
 matches = len(filtered_df)
-wins = len(team_df[team_df["winner"] == selectted_team])
+wins = filtered_df["winner"].count()
+
 
 if selected_team == "All Teams":
     win_percent = "-"
