@@ -70,7 +70,10 @@ st.write("Interactive Analysis of IPL Matches")
 if selected_team == "All Teams":
     filtered_df = df
 else:
-    filtered_df = df[df["winner"] == selected_team]
+    filtered_df = df[
+        (df["team1"] == selected_team) |
+        (df["team2"] == selected_team)
+    ]
 
 # ---------------- KPI CARDS ---------------- #
 
@@ -84,23 +87,21 @@ if selected_team == "All Teams":
 
 else:
 
-    total_matches = len(
-        df[(df["team1"] == selected_team) |
-           (df["team2"] == selected_team)]
-    )
+    matches = len(filtered_df)
 
     wins = len(df[df["winner"] == selected_team])
 
-    matches = total_matches
+    losses = matches - wins
 
-    if total_matches > 0:
-        win_percent = round((wins / total_matches) * 100, 2)
+    if matches > 0:
+        win_percent = round((wins / matches) * 100, 2)
     else:
+        win_percent = 0
         win_percent = 0
 
 col1.metric("Matches Played", matches)
 col2.metric("Matches Won", wins)
-col3.metric("Win %", win_percent)
+col3.metric("Win %", f"{win_percent}%")
 
 st.divider()
 
@@ -113,22 +114,40 @@ if selected_team == "All Teams":
 else:
     st.subheader(f"🏆 {selected_team} Match Wins")
 
-team_wins = filtered_df["winner"].value_counts().head(10)
+if selected_team == "All Teams":
+    team_wins = df["winner"].value_counts().head(10)
 
-fig, ax = plt.subplots(figsize=(10,5))
+    fig, ax = plt.subplots(figsize=(10,5))
+    team_wins.plot(kind="bar", color="royalblue", ax=ax)
 
-team_wins.plot(
-    kind="bar",
-    color=bg,
-    ax=ax
-)
+    plt.xticks(rotation=45)
+    plt.xlabel("Teams")
+    plt.ylabel("Wins")
+    plt.grid(axis="y", alpha=0.3)
 
-plt.xticks(rotation=45)
-plt.xlabel("Teams")
-plt.ylabel("Wins")
+    st.pyplot(fig)
 
-st.pyplot(fig)
+else:
+    season_wins = (
+        filtered_df.groupby("season")
+        .size()
+        .sort_index()
+    )
 
+    fig, ax = plt.subplots(figsize=(10,5))
+    season_wins.plot(
+        kind="bar",
+        color=bg,
+        ax=ax
+    )
+
+    plt.xticks(rotation=45)
+    plt.xlabel("Season")
+    plt.ylabel("Matches Won")
+    plt.grid(axis="y", alpha=0.3)
+
+    st.pyplot(fig)
+  
 # ---------------- MATCHES PER SEASON ---------------- #
 
 st.subheader("Matches Played Per Season")
