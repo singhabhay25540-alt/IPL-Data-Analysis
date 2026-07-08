@@ -73,12 +73,13 @@ else:
     filtered_df = df[df["winner"] == selected_team]
 
 # ---------------- KPI CARDS ---------------- #
+
+col1, col2, col3 = st.columns(3)
+
 if selected_team == "All Teams":
 
     matches = len(df)
-
     wins = df["winner"].count()
-
     win_percent = "-"
 
 else:
@@ -88,17 +89,17 @@ else:
            (df["team2"] == selected_team)]
     )
 
-    total_wins = len(
-        df[df["winner"] == selected_team]
-    )
+    wins = len(df[df["winner"] == selected_team])
 
     matches = total_matches
-    wins = total_wins
 
-    win_percent = round((wins / matches) * 100,2)
-  
-col1.metric("Matches", matches)
-col2.metric("Wins", wins)
+    if total_matches > 0:
+        win_percent = round((wins / total_matches) * 100, 2)
+    else:
+        win_percent = 0
+
+col1.metric("Matches Played", matches)
+col2.metric("Matches Won", wins)
 col3.metric("Win %", win_percent)
 
 st.divider()
