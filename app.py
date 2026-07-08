@@ -134,4 +134,60 @@ plt.ylabel("Matches")
 
 st.pyplot(fig2)
 
+st.markdown("---")
+st.subheader("🥇 Top 10 Player of the Match Winners")
+
+pom = df['player_of_match'].value_counts().head(10)
+
+fig3, ax3 = plt.subplots(figsize=(10,5))
+pom.plot(kind='bar', ax=ax3)
+
+plt.xticks(rotation=45)
+plt.xlabel("Players")
+plt.ylabel("Awards")
+plt.title("Top 10 Player of the Match Winners")
+
+st.pyplot(fig3)
+
+st.markdown("---")
+st.subheader("🏟️ Top 10 IPL Venues")
+
+venue = df['venue'].value_counts().head(10)
+
+fig4, ax4 = plt.subplots(figsize=(10,5))
+venue.plot(kind='bar', ax=ax4)
+
+plt.xticks(rotation=45)
+plt.xlabel("Venue")
+plt.ylabel("Matches")
+plt.title("Top 10 IPL Venues")
+
+st.pyplot(fig4)
+
+st.markdown("---")
+st.subheader("🌍 Top Cities Hosting IPL Matches")
+
+city = df['city'].value_counts().head(10)
+
+fig5, ax5 = plt.subplots(figsize=(10,5))
+city.plot(kind='bar', ax=ax5)
+
+plt.xticks(rotation=45)
+plt.xlabel("City")
+plt.ylabel("Matches")
+plt.title("Top Cities")
+
+st.pyplot(fig5)
+
+st.markdown("---")
+st.subheader("🪙 Toss Decision Analysis")
+
+toss = df['toss_decision'].value_counts()
+
+fig6, ax6 = plt.subplots(figsize=(6,6))
+ax6.pie(toss, labels=toss.index, autopct="%1.1f%%", startangle=90)
+ax6.set_title("Bat First vs Field First")
+
+st.pyplot(fig6)
+
 st.success("Created by Abhay Singh ❤️")
