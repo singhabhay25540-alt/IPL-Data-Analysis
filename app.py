@@ -9,7 +9,6 @@ st.set_page_config(page_title="IPL Data Analysis Dashboard",
 
 # ---------------- LOAD DATA ---------------- #
 df = pd.read_csv("ipl_comprehensive_dataset.csv")
-st.write(df.columns)
 
 # ---------------- TEAM COLORS ---------------- #
 team_colors = {
@@ -30,6 +29,12 @@ team_colors = {
 # ---------------- SIDEBAR ---------------- #
 st.sidebar.title("🏏 IPL Dashboard")
 
+st.sidebar.markdown("---")
+
+st.sidebar.write("Select an IPL Team")
+
+st.sidebar.markdown("---")
+
 teams = sorted(df["winner"].dropna().unique())
 
 selected_team = st.sidebar.selectbox(
@@ -38,10 +43,10 @@ selected_team = st.sidebar.selectbox(
 )
 
 # ---------------- COLOR CHANGE ---------------- #
-bg = "#ffffff"
+bg = "#1f77b4"
 
 if selected_team != "All Teams":
-    bg = team_colors.get(selected_team, "#ffffff")
+    bg = team_colors.get(selected_team, "#1f77b4")
 
 st.markdown(
     f"""
@@ -68,18 +73,30 @@ else:
     filtered_df = df[df["winner"] == selected_team]
 
 # ---------------- KPI CARDS ---------------- #
-col1, col2, col3 = st.columns(3)
-
-matches = len(filtered_df)
-wins = filtered_df["winner"].count()
-
-
 if selected_team == "All Teams":
-    win_percent = "-"
-else:
-    total_matches = len(df[(df["team1"] == selected_team) | (df["team2"] == selected_team)])
-    win_percent = round((wins/total_matches)*100,2) if total_matches else 0
 
+    matches = len(df)
+
+    wins = df["winner"].count()
+
+    win_percent = "-"
+
+else:
+
+    total_matches = len(
+        df[(df["team1"] == selected_team) |
+           (df["team2"] == selected_team)]
+    )
+
+    total_wins = len(
+        df[df["winner"] == selected_team]
+    )
+
+    matches = total_matches
+    wins = total_wins
+
+    win_percent = round((wins / matches) * 100,2)
+  
 col1.metric("Matches", matches)
 col2.metric("Wins", wins)
 col3.metric("Win %", win_percent)
@@ -87,11 +104,13 @@ col3.metric("Win %", win_percent)
 st.divider()
 
 # ---------------- DATASET ---------------- #
-st.subheader("Dataset Preview")
-st.dataframe(filtered_df, use_container_width=True)
+st.info("Use the sidebar to explore IPL team statistics.")
 
 # ---------------- TEAM WINS GRAPH ---------------- #
-st.subheader(f"{selected_team} Performance Overview")
+if selected_team == "All Teams":
+    st.subheader("🏆 Overall IPL Team Wins")
+else:
+    st.subheader(f"🏆 {selected_team} Match Wins")
 
 team_wins = filtered_df["winner"].value_counts().head(10)
 
@@ -190,4 +209,17 @@ ax6.set_title("Bat First vs Field First")
 
 st.pyplot(fig6)
 
-st.success("Created by Abhay Singh ❤️")
+st.markdown("---")
+
+st.markdown(
+"""
+<center>
+
+Made with ❤️ by <b>Abhay Singh</b>
+
+BS in Data Science | IIT Madras
+
+</center>
+""",
+unsafe_allow_html=True
+)
