@@ -9,6 +9,7 @@ st.set_page_config(page_title="IPL Data Analysis Dashboard",
 
 # ---------------- LOAD DATA ---------------- #
 df = pd.read_csv("ipl_comprehensive_dataset.csv")
+st.write(df.columns)
 
 # ---------------- TEAM COLORS ---------------- #
 team_colors = {
