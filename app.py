@@ -239,9 +239,12 @@ fig5.update_traces(
 fig5.update_layout(
     xaxis_title="City",
     yaxis_title="Matches",
-    xaxis=dict(tickangle=-20),
-    height=550
+    height=600,
+    font=dict(size=14),
+    title_x=0.5
 )
+
+fig5.update_xaxes(tickangle=0)
 
 st.plotly_chart(fig5, use_container_width=True)
 
