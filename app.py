@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px 
 
 # ---------------- PAGE SETTINGS ---------------- #
 st.set_page_config(page_title="IPL Data Analysis Dashboard",
@@ -191,17 +192,30 @@ st.pyplot(fig3)
 st.markdown("---")
 st.subheader("🏟️ Top 10 IPL Venues")
 
-venue = df['venue'].value_counts().head(10)
+venue = df["venue"].value_counts().head(10).reset_index()
+venue.columns = ["Venue", "Matches"]
 
-fig4, ax4 = plt.subplots(figsize=(10,5))
-venue.plot(kind='bar', ax=ax4)
+fig4 = px.bar(
+    venue,
+    x="Venue",
+    y="Matches",
+    text="Matches",
+    title="Top 10 IPL Venues"
+)
 
-plt.xticks(rotation=45)
-plt.xlabel("Venue")
-plt.ylabel("Matches")
-plt.title("Top 10 IPL Venues")
+fig4.update_traces(
+    textposition="outside",
+    hovertemplate="<b>%{x}</b><br>Matches: %{y}<extra></extra>"
+)
 
-st.pyplot(fig4)
+fig4.update_layout(
+    xaxis=dict(tickangle=-30),
+    yaxis_title="Matches",
+    xaxis_title="Venue",
+    height=600
+)
+
+st.plotly_chart(fig4, use_container_width=True)
 
 st.markdown("---")
 st.subheader("🌍 Top Cities Hosting IPL Matches")
