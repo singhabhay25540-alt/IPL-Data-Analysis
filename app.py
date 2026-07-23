@@ -220,17 +220,30 @@ st.plotly_chart(fig4, use_container_width=True)
 st.markdown("---")
 st.subheader("🌍 Top Cities Hosting IPL Matches")
 
-city = df['city'].value_counts().head(10)
+city = df["city"].value_counts().head(10).reset_index()
+city.columns = ["City", "Matches"]
 
-fig5, ax5 = plt.subplots(figsize=(10,5))
-city.plot(kind='bar', ax=ax5)
+fig5 = px.bar(
+    city,
+    x="City",
+    y="Matches",
+    text="Matches",
+    title="Top Cities Hosting IPL Matches"
+)
 
-plt.xticks(rotation=45)
-plt.xlabel("City")
-plt.ylabel("Matches")
-plt.title("Top Cities")
+fig5.update_traces(
+    textposition="outside",
+    hovertemplate="<b>%{x}</b><br>Matches: %{y}<extra></extra>"
+)
 
-st.pyplot(fig5)
+fig5.update_layout(
+    xaxis_title="City",
+    yaxis_title="Matches",
+    xaxis=dict(tickangle=-20),
+    height=550
+)
+
+st.plotly_chart(fig5, use_container_width=True)
 
 st.markdown("---")
 st.subheader("🪙 Toss Decision Analysis")
