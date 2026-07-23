@@ -161,6 +161,12 @@ fig.update_layout(
     coloraxis_showscale=False
 )
 
+fig.update_xaxes(
+    tickmode="array",
+    tickvals=season_wins["Season"],
+    ticktext=season_wins["Season"]
+)
+
 st.plotly_chart(fig, use_container_width=True)
   
 # ---------------- MATCHES PER SEASON ---------------- #
