@@ -191,53 +191,32 @@ st.pyplot(fig3)
 st.markdown("---")
 st.subheader("🏟️ Top 10 IPL Venues")
 
-venue = df['venue'].value_counts().head(10).reset_index()
-venue.columns = ["Venue", "Matches"]
+venue = df['venue'].value_counts().head(10)
 
-fig4 = px.bar(
-    venue,
-    x="Venue",
-    y="Matches",
-    text="Matches",
-    title="Top 10 IPL Venues"
-)
+fig4, ax4 = plt.subplots(figsize=(10,5))
+venue.plot(kind='bar', ax=ax4)
 
-fig4.update_traces(
-    textposition="outside",
-    hovertemplate="<b>%{x}</b><br>Matches: %{y}<extra></extra>"
-)
+plt.xticks(rotation=45)
+plt.xlabel("Venue")
+plt.ylabel("Matches")
+plt.title("Top 10 IPL Venues")
 
-fig4.update_layout(
-    xaxis_tickangle=-30,
-    height=600,
-    xaxis_title="Venue",
-    yaxis_title="Matches"
-)
+st.pyplot(fig4)
 
-st.plotly_chart(fig4, use_container_width=True)
+st.markdown("---")
+st.subheader("🌍 Top Cities Hosting IPL Matches")
 
-city = df['city'].value_counts().head(10).reset_index()
-city.columns = ["City", "Matches"]
+city = df['city'].value_counts().head(10)
 
-fig5 = px.bar(
-    city,
-    x="City",
-    y="Matches",
-    text="Matches",
-    title="Top Cities"
-)
+fig5, ax5 = plt.subplots(figsize=(10,5))
+city.plot(kind='bar', ax=ax5)
 
-fig5.update_traces(
-    textposition="outside",
-    hovertemplate="<b>%{x}</b><br>Matches: %{y}<extra></extra>"
-)
+plt.xticks(rotation=45)
+plt.xlabel("City")
+plt.ylabel("Matches")
+plt.title("Top Cities")
 
-fig5.update_layout(
-    xaxis_tickangle=-25,
-    height=550
-)
-
-st.plotly_chart(fig5, use_container_width=True)
+st.pyplot(fig5)
 
 st.markdown("---")
 st.subheader("🪙 Toss Decision Analysis")
