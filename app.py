@@ -130,24 +130,38 @@ if selected_team == "All Teams":
 
 else:
     season_wins = (
-        filtered_df.groupby("season")
-        .size()
-        .sort_index()
-    )
+    filtered_df.groupby("season")
+    .size()
+    .sort_index()
+    .reset_index()
+)
 
-    fig, ax = plt.subplots(figsize=(10,5))
-    season_wins.plot(
-        kind="bar",
-        color=bg,
-        ax=ax
-    )
+season_wins.columns = ["Season", "Wins"]
 
-    plt.xticks(rotation=45)
-    plt.xlabel("Season")
-    plt.ylabel("Matches Won")
-    plt.grid(axis="y", alpha=0.3)
+fig = px.bar(
+    season_wins,
+    x="Season",
+    y="Wins",
+    text="Wins",
+    title=f"{selected_team} Match Wins by Season",
+    color="Wins",
+    color_continuous_scale="Viridis"
+)
 
-    st.pyplot(fig)
+fig.update_traces(
+    textposition="outside",
+    hovertemplate="<b>Season:</b> %{x}<br><b>Wins:</b> %{y}<extra></extra>"
+)
+
+fig.update_layout(
+    height=600,
+    title_x=0.5,
+    xaxis_title="Season",
+    yaxis_title="Matches Won",
+    coloraxis_showscale=False
+)
+
+st.plotly_chart(fig, use_container_width=True)
   
 # ---------------- MATCHES PER SEASON ---------------- #
 
