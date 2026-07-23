@@ -137,6 +137,7 @@ else:
 )
 
 season_wins.columns = ["Season", "Wins"]
+st.write(season_wins)
 
 fig = px.bar(
     season_wins,
@@ -162,9 +163,9 @@ fig.update_layout(
 )
 
 fig.update_xaxes(
-    tickmode="array",
-    tickvals=season_wins["Season"],
-    ticktext=season_wins["Season"]
+    tickmode="linear",
+    dtick=1,
+    tickangle=-45
 )
 
 st.plotly_chart(fig, use_container_width=True)
