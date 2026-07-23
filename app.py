@@ -177,17 +177,36 @@ st.pyplot(fig2)
 st.markdown("---")
 st.subheader("🥇 Top 10 Player of the Match Winners")
 
-pom = df['player_of_match'].value_counts().head(10)
+pom = df["player_of_match"].value_counts().head(10).reset_index()
+pom.columns = ["Player", "Awards"]
 
-fig3, ax3 = plt.subplots(figsize=(10,5))
-pom.plot(kind='bar', ax=ax3)
+fig3 = px.bar(
+    pom,
+    x="Player",
+    y="Awards",
+    text="Awards",
+    title="Top 10 Player of the Match Winners",
+    color="Awards",
+    color_continuous_scale="Blues"
+)
 
-plt.xticks(rotation=45)
-plt.xlabel("Players")
-plt.ylabel("Awards")
-plt.title("Top 10 Player of the Match Winners")
+fig3.update_traces(
+    textposition="outside",
+    hovertemplate="<b>%{x}</b><br>Awards: %{y}<extra></extra>"
+)
 
-st.pyplot(fig3)
+fig3.update_layout(
+    xaxis_title="Players",
+    yaxis_title="Awards",
+    height=600,
+    font=dict(size=14),
+    title_x=0.5,
+    coloraxis_showscale=False
+)
+
+fig3.update_xaxes(tickangle=-30)
+
+st.plotly_chart(fig3, use_container_width=True)
 
 st.markdown("---")
 st.subheader("🏟️ Top 10 IPL Venues")
